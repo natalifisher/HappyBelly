@@ -1,3 +1,7 @@
 MENU:
 https://github.com/neu-rah/ArduinoMenu/blob/master/examples/adafruitGfx_eTFT/TFT_eSPI/ArduinoMenu_LilyGo_TTGO_T-display_demo/ArduinoMenu_LilyGo_TTGO_T-display_demo.ino
 Video showing results: https://www.youtube.com/watch?v=AhI_Xs1Bt8Y
+
+
+PIN GUIDE (NOTE WHICH ARE ONLY INPUT):
+https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
