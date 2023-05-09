@@ -13,8 +13,16 @@ DHT20 DHT;         // humidity sensor
 #define PHOTOSENSOR_THRESHOLD 1.5
 #define HUMIDITY_MEDIUM_THRESHOLD 50
 #define HUMIDITY_HIGH_THRESHOLD 70
-
+#define START_TIME millis()
+int timer = millis() + 2000;
 // check photosensor reading; if below light threshold, turn on visibility light
+void blinkLight(int pin, int freq)
+{
+  digitalWrite(pin, HIGH);
+  delay(freq);
+  digitalWrite(pin, LOW);
+  delay(freq);
+}
 void visiblityLight()
 {
   // get photosensor reading
@@ -49,6 +57,7 @@ void humidityCheck()
     // These should be changed to be on TTGO menu/ & display
     Serial.println("The humidity in the reservoir is high!");
     Serial.println("You may want to replace the food with a newer batch");
+    blinkLight(YELLOW_PIN, 200); // yellow blinks every 200ms
   }
   else
   {
@@ -73,7 +82,8 @@ void setup()
 void loop()
 {
   // Put your main code here, to run repeatedly:
-  // visiblityLight()
-
-  delay(999);
+  if ((millis() > timer))
+    // visiblityLight()
+    // humidityCheck()
+    timer = millis() + 2000;
 }
