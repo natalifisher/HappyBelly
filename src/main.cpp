@@ -31,7 +31,12 @@ void visiblityLight()
   {
     // turn on blue light for visibility
     digitalWrite(BLUE_PIN, HIGH);
-  };
+  }
+  else
+  {
+    // turn off blue light for visibility
+    digitalWrite(BLUE_PIN, LOW);
+  }
 }
 
 // check the humidity situation in the reservoir
@@ -70,7 +75,7 @@ void setup()
 {
   // Code to run only once:
   // Setup printing
-  Serial.print(9600);
+  Serial.begin(9600);
   // Setup LEDs
   pinMode(RED_PIN, OUTPUT);
   pinMode(YELLOW_PIN, OUTPUT);
