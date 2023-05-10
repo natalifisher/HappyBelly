@@ -1,4 +1,5 @@
 
+// source of feeding information: https://a-z-animals.com/blog/dog-feeding-rules-by-size-age-and-weight/
 int FEEDING_FREQUENCY; // how many times per day
 float FEEDING_AMOUNT;  // in cups, per meal
 int AGE;               // note it can only take integer values
