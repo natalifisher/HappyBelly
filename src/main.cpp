@@ -1,10 +1,12 @@
-#include <Arduino.h>
-#include "DHT20.h" // for humidity sensor
-DHT20 DHT;         // humidity sensor
 // TTGO manual: http://www.lilygo.cn/prod_view.aspx?Id=1126
 // shows which are input only (might be wrong idk): https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
-
 // Check which pins are input only! available online
+
+#include <Arduino.h>
+#include "SparkFunLSM6DSO.h" // for gyroscope
+#include "DHT20.h"           // for humidity sensor
+
+DHT20 DHT; // humidity sensor
 #define RED_PIN 32
 #define YELLOW_PIN 33
 #define GREEN_PIN 25
@@ -13,8 +15,14 @@ DHT20 DHT;         // humidity sensor
 #define PHOTOSENSOR_THRESHOLD 1.5
 #define HUMIDITY_MEDIUM_THRESHOLD 50
 #define HUMIDITY_HIGH_THRESHOLD 70
+#define GYRO_ADDRESS 0x6A     // I2C
+#define HUMIDITY_ADDRESS 0x38 // I2C
 #define START_TIME millis()
+
 int timer = millis() + 2000;
+
+LSM6DSO myGyrSensor;
+
 // check photosensor reading; if below light threshold, turn on visibility light
 void blinkLight(int pin, int freq)
 {
@@ -82,6 +90,9 @@ void setup()
   pinMode(GREEN_PIN, OUTPUT);
   // Setup humidity sensor
   DHT.begin(); //  ESP32 default pins are 21, 22
+  myGyrSensor.begin();
+
+  // ask initial user questions here:
 }
 
 void loop()
