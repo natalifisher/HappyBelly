@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include "SparkFunLSM6DSO.h" // for gyroscope
 #include "DHT20.h"           // for humidity sensor
+#include "weight_sensor.h"
 
 DHT20 DHT; // humidity sensor
 #define RED_PIN 32
@@ -84,6 +85,8 @@ void setup()
   // Code to run only once:
   // Setup printing
   Serial.begin(9600);
+  // Weight sensor setup
+  setupWeightSensors();
   // Setup LEDs
   pinMode(RED_PIN, OUTPUT);
   pinMode(YELLOW_PIN, OUTPUT);
@@ -103,3 +106,24 @@ void loop()
     // humidityCheck()
     timer = millis() + 2000;
 }
+
+/* --- TESTS FOR WEIGHT SENSORS ---
+test getWeight() ------------------
+Serial.println(getWeight(1));
+Serial.println(getWeight(2));
+delay(1000);
+
+test printWeights() ---------------
+printWeights();
+-------------------------------- */
+
+/* -------- CS 147--- Group 25 ------------
+          OSCAR                   NATALI
+
+      |\      _,,,---,,_           /^ ^\
+ZZZzz /,`.-'`'    -.  ;-;;,_      / 0 0 \
+     |,4-  ) )-,_. ,\ (  `'-'     /\ V /\
+    '---''(_/--'  `-'\_)           / - \
+                                   |    \
+                                   || (__V
+-----------------------------------------*/
