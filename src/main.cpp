@@ -3,7 +3,7 @@
 // Check which pins are input only! available online
 
 #include <Arduino.h>
-#include "SparkFunLSM6DSO.h" // for gyroscope
+#include "gyro_sensor.h"
 #include "weight_sensor.h"
 #include "humidity_sensor.h"
 #include "light_sensor.h"
@@ -11,25 +11,23 @@
 #include "constants.h"
 #define START_TIME millis()
 
-int timer = millis() + 2000;
-
-void fallCheck()
-{
-}
-
+int timer = millis() + GENERAL_FREQUENCY;
+int timer_fallcheck = millis() + FALL_FREQUENCY;
 void setup()
 {
   // Code to run only once:
   // Setup printing
   Serial.begin(9600);
   // Weight sensor setup
-  setupWeightSensors();
+  // setupWeightSensors();
   // Lights setup
-  setupLights();
+  // setupLights();
   // Photosensor setup
-  setupPhotosensor();
+  // setupPhotosensor();
   // Humidity sensor setup
-  setupHumiditySensor();
+  // setupHumiditySensor();
+  // Gyroscope sensor setup
+  setupGyro();
   // ask initial user questions here:
 }
 
@@ -39,9 +37,15 @@ void loop()
   if ((millis() > timer))
   {
     // visiblityLight()
-    // humidityCheck()
-    printWeights();
-    timer = millis() + 2000;
+    // humidityCheck();
+    // printWeights();
+    // fallCheck();
+    timer = millis() + GENERAL_FREQUENCY;
+  }
+  if ((millis() > timer_fallcheck))
+  {
+    fallCheck();
+    timer_fallcheck = millis() + FALL_FREQUENCY;
   }
 }
 
