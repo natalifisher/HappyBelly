@@ -25,7 +25,7 @@ void setup()
   // Photosensor setup
   // setupPhotosensor();
   // Humidity sensor setup
-  // setupHumiditySensor();
+  setupHumiditySensor();
   // Gyroscope sensor setup
   setupGyro();
   // ask initial user questions here:
@@ -37,7 +37,7 @@ void loop()
   if ((millis() > timer))
   {
     // visiblityLight()
-    // humidityCheck();
+    humidityCheck();
     // printWeights();
     // fallCheck();
     timer = millis() + GENERAL_FREQUENCY;
