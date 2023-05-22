@@ -1,5 +1,6 @@
 #include "SparkFunLSM6DSO.h"
 #include "gyro_sensor.h"
+#include "buzzer.h"
 float OFFSET_X, OFFSET_Y, OFFSET_Z;
 LSM6DSO mySensor;
 
@@ -40,6 +41,11 @@ void fallCheck()
     if ((abs(x) < 0.2 && abs(y) < 0.2 && abs(z) > 0.8) || (abs(x) < 0.2 && abs(z) < 0.2 && abs(y) > 0.8))
     {
         Serial.println("ALERT"); // print to terminal
-        // buzzer
+        // activate buzzer
+        activateBuzzer();
+    }
+    else
+    {
+        disableBuzzer(); // turn off buzzer
     }
 }

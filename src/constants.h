@@ -1,7 +1,8 @@
 #define RED_PIN 32
 #define YELLOW_PIN 33
 #define GREEN_PIN 25
-#define BLUE_PIN 25
+#define BLUE_PIN 26
+#define BUZZER_PIN 27 //?
 #define PHOTOSENSOR_PIN 36
 #define PHOTOSENSOR_THRESHOLD 1.5
 #define HUMIDITY_MEDIUM_THRESHOLD 65

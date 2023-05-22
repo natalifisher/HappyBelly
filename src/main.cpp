@@ -11,6 +11,7 @@
 #include "constants.h"
 #define START_TIME millis()
 
+// timers
 int timer = millis() + GENERAL_FREQUENCY;
 int timer_fallcheck = millis() + FALL_FREQUENCY;
 void setup()
@@ -20,12 +21,19 @@ void setup()
   Serial.begin(9600);
   // Weight sensor setup
   // setupWeightSensors();
+
   // Lights setup
   // setupLights();
+
+  // Buzzer setup
+  // setupBuzzer();
+
   // Photosensor setup
   // setupPhotosensor();
+
   // Humidity sensor setup
   setupHumiditySensor();
+
   // Gyroscope sensor setup
   setupGyro();
   // ask initial user questions here:
