@@ -12,6 +12,7 @@
 // #include "feeding.h"
 #include "constants.h"
 // #include "feeding.h"
+#include "servo_sensor.h"
 #define START_TIME millis()
 // timers
 int timer = millis() + GENERAL_FREQUENCY;
@@ -23,7 +24,6 @@ void setup()
   Serial.begin(9600);
   // Weight sensor setup
   // setupWeightSensors();
-
   // Lights setup
   // setupLights();
 
@@ -32,13 +32,11 @@ void setup()
 
   // Photosensor setup
   // setupPhotosensor();
-
   // Humidity sensor setup
-  setupHumiditySensor();
-
-  // Gyroscope sensor setup
-  setupGyro();
+  // setupHumiditySensor();
   // ask initial user questions here:
+  // Servo Setup
+  setUpServo();
 }
 
 void loop()
@@ -58,6 +56,14 @@ void loop()
     timer_fallcheck = millis() + FALL_FREQUENCY;
   }
 }
+
+/* ---  TEST FOR SERVO ---
+setUpServo();
+
+openServo();
+closeServo();
+
+*/
 
 /* --- TESTS FOR WEIGHT SENSORS ---
 test getWeight() ------------------
