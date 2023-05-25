@@ -13,7 +13,7 @@ void visiblityLight()
     if (photosensor_reading > PHOTOSENSOR_THRESHOLD)
     {
         // turn on blue light for visibility
-        digitalWrite(BLUE_PIN, HIGH);
+        digitalWrite(BLUE_PIN, HIGH); // connect several blue LEDs here
     }
     else
     {
