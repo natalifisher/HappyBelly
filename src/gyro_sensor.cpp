@@ -31,12 +31,12 @@ void fallCheck()
     float x = mySensor.readFloatAccelX() - OFFSET_X;
     float y = mySensor.readFloatAccelY() - OFFSET_Y;
     float z = mySensor.readFloatAccelZ() - OFFSET_Z;
-    Serial.print("X:");
-    Serial.println(x);
-    Serial.print("Y:");
-    Serial.println(y);
-    Serial.print("Z:");
-    Serial.println(z);
+    // Serial.print("X:");
+    // Serial.println(x);
+    // Serial.print("Y:");
+    // Serial.println(y);
+    // Serial.print("Z:");
+    // Serial.println(z);
     // fell over if z or y have acceleration of ~0.981, while other axes have accelration near 0
     if ((abs(x) < 0.2 && abs(y) < 0.2 && abs(z) > 0.8) || (abs(x) < 0.2 && abs(z) < 0.2 && abs(y) > 0.8))
     {

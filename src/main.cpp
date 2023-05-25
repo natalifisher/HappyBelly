@@ -5,12 +5,14 @@
 #include <Arduino.h>
 #include "gyro_sensor.h"
 #include "weight_sensor.h"
+#include "buzzer.h"
 #include "humidity_sensor.h"
 #include "light_sensor.h"
 #include "lights.h"
+// #include "feeding.h"
 #include "constants.h"
+// #include "feeding.h"
 #define START_TIME millis()
-
 // timers
 int timer = millis() + GENERAL_FREQUENCY;
 int timer_fallcheck = millis() + FALL_FREQUENCY;
@@ -26,7 +28,7 @@ void setup()
   // setupLights();
 
   // Buzzer setup
-  // setupBuzzer();
+  setupBuzzer();
 
   // Photosensor setup
   // setupPhotosensor();
