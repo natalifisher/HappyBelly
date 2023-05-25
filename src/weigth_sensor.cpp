@@ -16,13 +16,13 @@ HX711 scale_two;
 void setupWeightSensors()
 {
   // scale ONE setup
-  scale_one.begin(27, 26); // format: (DT/DOUT, SCK)
+  scale_one.begin(33, 26); // format: (DT/DOUT, SCK)
   scale_one.set_scale(427.00);
   scale_one.tare();
-  // scale TWO setup
-  scale_two.begin(21, 22); // format: (DT/DOUT, SCK)
-  scale_two.set_scale(459.00);
-  scale_two.tare();
+  // // scale TWO setup
+  // scale_two.begin(21, 22); // format: (DT/DOUT, SCK)
+  // scale_two.set_scale(459.00);
+  // scale_two.tare();
 }
 
 int getWeight(int scale_num)
@@ -40,11 +40,11 @@ int getWeight(int scale_num)
 
 void printWeights()
 {
-  Serial.println("Scale 1: " + String(scale_one.get_units(), 0) + "\t||\t" +
-                 "Scale 2: " + String(scale_two.get_units(), 0));
+  Serial.println("Scale 1: " + String(scale_one.get_units(), 5) + "\t||\t"); // +
+                                                                             //  "Scale 2: " + String(scale_two.get_units(), 0));
   scale_one.power_down();
-  scale_two.power_down();
+  // scale_two.power_down();
   delay(1000);
   scale_one.power_up();
-  scale_two.power_up();
+  // scale_two.power_up();
 }

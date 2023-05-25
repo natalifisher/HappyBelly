@@ -17,13 +17,14 @@
 // timers
 int timer = millis() + GENERAL_FREQUENCY;
 int timer_fallcheck = millis() + FALL_FREQUENCY;
+int timer_dispense = millis() + 90000;
 void setup()
 {
   // Code to run only once:
   // Setup printing
   Serial.begin(9600);
   // Weight sensor setup
-  // setupWeightSensors();
+  setupWeightSensors();
   // Lights setup
   // setupLights();
 
@@ -33,20 +34,26 @@ void setup()
   // Photosensor setup
   // setupPhotosensor();
   // Humidity sensor setup
-  // setupHumiditySensor();
+  setupHumiditySensor();
   // ask initial user questions here:
   // Servo Setup
   setUpServo();
+
+  // gyro setup
+  setupGyro();
+  closeServo();
 }
 
 void loop()
 {
+  openServo();
   // Put your main code here, to run repeatedly:
   if ((millis() > timer))
   {
     // visiblityLight()
     humidityCheck();
-    // printWeights();
+    printWeights();
+    // closeServo();
     // fallCheck();
     timer = millis() + GENERAL_FREQUENCY;
   }
@@ -55,6 +62,11 @@ void loop()
     fallCheck();
     timer_fallcheck = millis() + FALL_FREQUENCY;
   }
+  // if ((millis() > timer_dispense))
+  // {
+  //   openServo();
+  //   timer_dispense = millis() + 90000;
+  // }
 }
 
 /* ---  TEST FOR SERVO ---
