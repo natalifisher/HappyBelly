@@ -13,11 +13,19 @@
 #include "constants.h"
 // #include "feeding.h"
 #include "servo_sensor.h"
+#include "display.h"
+#include "bluetooth_connection.h"
 #define START_TIME millis()
+
+// for user questionnaire -----------------
+boolean questionnaire_is_complete = false;
+void runQuestionnaire();
+
 // timers
 int timer = millis() + GENERAL_FREQUENCY;
 int timer_fallcheck = millis() + FALL_FREQUENCY;
 int timer_dispense = millis() + 90000;
+
 void setup()
 {
   // Code to run only once:
@@ -37,30 +45,52 @@ void setup()
   setupHumiditySensor();
   // ask initial user questions here:
   // Servo Setup
-  setUpServo();
-
-  // gyro setup
+  // setUpServo();
   setupGyro();
   closeServo();
+
+  setupBluetooth();
+  setupDisplay();
 }
 
 void loop()
 {
-  openServo();
-  // Put your main code here, to run repeatedly:
-  if ((millis() > timer))
+  // one time questionnaire -------------
+  if (questionnaire_is_complete == false)
   {
-    // visiblityLight()
-    humidityCheck();
-    printWeights();
-    // closeServo();
-    // fallCheck();
-    timer = millis() + GENERAL_FREQUENCY;
-  }
-  if ((millis() > timer_fallcheck))
+    runQuestionnaire();
+    questionnaire_is_complete = true;
+    showComplete();
+  } // ----------------------------------
+
+  // // Put your main code here, to run repeatedly:
+  // if ((millis() > timer))
+  // {
+  //   // visiblityLight()
+  //   humidityCheck();
+  //   // printWeights();
+  //   // fallCheck();
+  //   timer = millis() + GENERAL_FREQUENCY;
+  // }
+  // if ((millis() > timer_fallcheck))
+  // {
+  //   fallCheck();
+  //   timer_fallcheck = millis() + FALL_FREQUENCY;
+  // }
+}
+
+void runQuestionnaire()
+{
+  for (int i = 1; i <= 3; i++)
   {
-    fallCheck();
-    timer_fallcheck = millis() + FALL_FREQUENCY;
+    askQuestion(i);
+    while (getResponse(i) == '\0')
+    {
+      // Wait until a response is received for the current question
+    }
+
+    showResponse(i, getResponse(i));
+    delay(5000);
   }
   // if ((millis() > timer_dispense))
   // {
@@ -71,7 +101,6 @@ void loop()
 
 /* ---  TEST FOR SERVO ---
 setUpServo();
-
 openServo();
 closeServo();
 
