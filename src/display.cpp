@@ -147,6 +147,15 @@ void showComplete()
     }
 }
 
+void displayMessage(int color, char *message, int ypos)
+{
+    // ypos starts at 20
+    tft.setTextSize(2);
+    tft.setTextColor(color);
+    tft.setCursor(ypos, 20);
+    tft.println(message);
+}
+
 // void showComplete()
 // {
 
