@@ -109,7 +109,7 @@ void showComplete()
     tft.setTextColor(TFT_BLACK);
     tft.setTextSize(4);
 
-    for (size_t i = 0; i < 10; i++)
+    for (size_t i = 0; i < 5; i++)
     {
         // Fade to white background
         for (int brightness = 0; brightness <= 255; brightness += 25)

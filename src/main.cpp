@@ -24,7 +24,7 @@ void runQuestionnaire();
 // timers
 int timer = millis() + GENERAL_FREQUENCY;
 int timer_fallcheck = millis() + FALL_FREQUENCY;
-int timer_dispense = millis() + 90000;
+int timer_dispense = millis() + 75000;
 
 void setup()
 {
@@ -45,9 +45,8 @@ void setup()
   setupHumiditySensor();
   // ask initial user questions here:
   // Servo Setup
-  // setUpServo();
+  setUpServo();
   setupGyro();
-  closeServo();
 
   setupBluetooth();
   setupDisplay();
@@ -61,22 +60,29 @@ void loop()
     runQuestionnaire();
     questionnaire_is_complete = true;
     showComplete();
+    timer_dispense = millis() + 75000;
   } // ----------------------------------
 
-  // // Put your main code here, to run repeatedly:
-  // if ((millis() > timer))
-  // {
-  //   // visiblityLight()
-  //   humidityCheck();
-  //   // printWeights();
-  //   // fallCheck();
-  //   timer = millis() + GENERAL_FREQUENCY;
-  // }
-  // if ((millis() > timer_fallcheck))
-  // {
-  //   fallCheck();
-  //   timer_fallcheck = millis() + FALL_FREQUENCY;
-  // }
+  // Put your main code here, to run repeatedly:
+  if ((millis() > timer))
+  {
+    // visiblityLight()
+    humidityCheck();
+    printWeights();
+    // openServo();
+    // fallCheck();
+    timer = millis() + GENERAL_FREQUENCY;
+  }
+  if ((millis() > timer_fallcheck))
+  {
+    fallCheck();
+    timer_fallcheck = millis() + FALL_FREQUENCY;
+  }
+  if ((millis() > timer_dispense))
+  {
+    openServo();
+    timer_dispense = millis() + 75000;
+  }
 }
 
 void runQuestionnaire()

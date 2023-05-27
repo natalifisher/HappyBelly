@@ -3,7 +3,7 @@
 #include "buzzer.h"
 float OFFSET_X, OFFSET_Y, OFFSET_Z;
 LSM6DSO mySensor;
-
+int buzzing = 0;
 void setupGyro()
 {
     Wire.begin();
@@ -43,9 +43,11 @@ void fallCheck()
         Serial.println("ALERT"); // print to terminal
         // activate buzzer
         activateBuzzer();
+        buzzing = 1;
     }
-    else
+    else if (buzzing == 1)
     {
         disableBuzzer(); // turn off buzzer
+        buzzing = 0;
     }
 }
