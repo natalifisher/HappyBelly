@@ -1,5 +1,20 @@
 
 #include "feeding.h"
+
+int FEEDING_FREQUENCY; // how many times per day
+float FEEDING_AMOUNT;  // in cups, per meal
+int AGE;               // note it can only take integer values
+int WEIGHT;            // in lbs
+enum BREEDS            // breeds
+{
+    TOY,
+    SMALL,
+    MEDIUM,
+    LARGE
+};
+BREEDS BREED; // selected breed
+// source of feeding information: https://a-z-animals.com/blog/dog-feeding-rules-by-size-age-and-weight/
+
 // source of feeding information: https://a-z-animals.com/blog/dog-feeding-rules-by-size-age-and-weight/
 void getFeedingFreqAmt()
 {
@@ -129,5 +144,68 @@ void getFeedingFreqAmt()
             FEEDING_FREQUENCY = 2;
             FEEDING_AMOUNT = 2.2;
         }
+    }
+}
+
+const char *getBreedString()
+{
+    if (BREED == TOY)
+    {
+        return "TOY";
+    }
+    else if (BREED == SMALL)
+    {
+        return "SMALL";
+    }
+    else if (BREED == MEDIUM)
+    {
+        return "MEDIUM";
+    }
+    else if (BREED == LARGE)
+    {
+        return "LARGE";
+    }
+    else
+    {
+        return "NA";
+    }
+}
+
+int getAge()
+{
+    return AGE;
+}
+int getWeight()
+{
+    return WEIGHT;
+}
+
+void setAge(int newAge)
+{
+    AGE = newAge;
+}
+
+void setWeight(int newWeight)
+{
+    WEIGHT = newWeight;
+}
+
+void setBreed(int newBreed)
+{
+    if (int(TOY) == newBreed)
+    {
+        BREED = TOY;
+    }
+    if (int(SMALL) == newBreed)
+    {
+        BREED = SMALL;
+    }
+    if (int(MEDIUM) == newBreed)
+    {
+        BREED = MEDIUM;
+    }
+    if (int(LARGE) == newBreed)
+    {
+        BREED = LARGE;
     }
 }

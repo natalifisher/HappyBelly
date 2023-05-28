@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include "HX711.h"
 #include "soc/rtc.h"
-
+#include "constants.h"
 /* ---- WEIGHT SENSOR PIN GUIDE -----------
 DT/DOUT: - 21 || 27 || 33 (digital input pins)
 SCK: ----- 22 || 26 || 32 (digital output pins)
@@ -38,6 +38,19 @@ int getWeight(int scale_num)
   return 0;
 }
 
+int getPercentWeight(int scale_num)
+{
+  if (scale_num == 1)
+  {
+    return int(scale_one.get_units() / MAX_WEIGHT);
+  }
+  else if (scale_num == 2)
+  {
+    return int(scale_two.get_units() / MAX_WEIGHT);
+  }
+  return 0;
+}
+
 void printWeights()
 {
   Serial.println("\n\nScale 1: " + String(scale_one.get_units(), 0) + "\t||\t Scale 2:" + String(scale_two.get_units(), 0) + "\n\n");
@@ -46,4 +59,16 @@ void printWeights()
   delay(1000);
   scale_one.power_up();
   scale_two.power_up();
+}
+
+float printPercentWeight()
+{
+  float wt = getPercentWeight(1);
+  Serial.println("\n\nReservoir: " + String(wt) + "\n\n");
+  scale_one.power_down();
+  scale_two.power_down();
+  delay(1000);
+  scale_one.power_up();
+  scale_two.power_up();
+  return wt;
 }

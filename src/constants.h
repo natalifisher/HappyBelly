@@ -11,3 +11,4 @@
 // #define GYRO_ADDRESS 0x6A     // I2C
 #define FALL_FREQUENCY 300
 #define GENERAL_FREQUENCY 2000
+#define MAX_WEIGHT 150 // grams

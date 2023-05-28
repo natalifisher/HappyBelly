@@ -4,8 +4,9 @@
 #include <Arduino.h>
 #include "HX711.h"
 
-void setupWeightSensors();  
+void setupWeightSensors();
 int getWeight(int scale_num);
+int getPercentWeight(int scale_num);
 void printWeights();
-
+float printPercentWeight();
 #endif
