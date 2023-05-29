@@ -1,0 +1,87 @@
+<!-- This was initially based on the information at
+https://dev.to/aws-heroes/worlds-simplest-synchronous-serverless-iot-dashboard-3ige
+The base code was then modified, added to, and made more complex in order to make the dashboard
+more visually pleasing and display and record the data we needed for the
+project -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dashboard</title>
+  </head>
+
+  <body style="background-color: aliceblue">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between">
+        <h1 style="color: cornflowerblue; margin: 25px">
+          Happy Belly Pet Feeder Dashboard
+        </h1>
+        <div
+          class="panel-body"
+          style="
+            background-color: white;
+            border: lightskyblue;
+            border-width: 5px;
+            border-style: solid;
+            align-self: flex-end;
+            padding: 15px;
+            margin: 25px;
+          "
+        >
+          <p id="age"></p>
+          <p id="weight"></p>
+          <p id="breed"></p>
+        </div>
+      </div>
+      <div
+        class="panel-body"
+        style="
+          background-color: white;
+          border: lightskyblue;
+          border-width: 5px;
+          border-style: solid;
+          padding: 15px;
+          margin-top: -75px;
+          margin-left: 25px;
+          margin-right: 75%;
+        "
+      >
+        <h3>Notifications</h3>
+        <p id="humidityWarning">.</p>
+        <p id="reservoirWarning">.</p>
+        <p id="fallOverWarning">.</p>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+          <div
+            id="humidityContainer"
+            style="
+              border: lightskyblue;
+              border-width: 5px;
+              border-style: solid;
+              margin: 25px;
+            "
+          ></div>
+        </div>
+        <div class="panel-body">
+          <div
+            id="reservoirContainer"
+            style="
+              border: lightskyblue;
+              border-width: 5px;
+              border-style: solid;
+              margin: 25px;
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>

@@ -25,7 +25,7 @@ void setupGyro()
     OFFSET_Z = mySensor.readFloatAccelZ();
 }
 
-void fallCheck()
+int fallCheck()
 {
     // read each value from accelerometer
     float x = mySensor.readFloatAccelX() - OFFSET_X;
@@ -49,5 +49,18 @@ void fallCheck()
     {
         disableBuzzer(); // turn off buzzer
         buzzing = 0;
+    }
+    return buzzing;
+}
+
+const char *getFellOverString(int fell)
+{
+    if (fell == 1)
+    { // fell
+        return "WARNING: fell over";
+    }
+    else
+    {
+        return "Pet feeder upright";
     }
 }

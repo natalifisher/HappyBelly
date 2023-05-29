@@ -3,4 +3,6 @@
 
 void setupGyro();
 
-void fallCheck();
+int fallCheck();
+
+const char *getFellOverString(int fell);

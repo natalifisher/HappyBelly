@@ -3,6 +3,8 @@
 #include "HX711.h"
 #include "soc/rtc.h"
 #include "constants.h"
+#include "buzzer.h"
+#include "lights.h"
 /* ---- WEIGHT SENSOR PIN GUIDE -----------
 DT/DOUT: - 21 || 27 || 33 (digital input pins)
 SCK: ----- 22 || 26 || 32 (digital output pins)
@@ -12,7 +14,7 @@ GND: ----- GND
 
 HX711 scale_one;
 HX711 scale_two;
-
+int buzzingWeight = 0;
 void setupWeightSensors()
 {
   // scale ONE setup
@@ -70,5 +72,38 @@ float printPercentWeight()
   delay(1000);
   scale_one.power_up();
   scale_two.power_up();
+
+  if (wt < 50) // less than half empty
+  {
+    activateBuzzer();
+    buzzingWeight = 1;
+    blinkLight(RED_PIN, 500); // yellow blinks every 500ms
+  }
+  else if (buzzingWeight == 1)
+  {
+    disableBuzzer(); // turn off buzzer
+    buzzingWeight = 0;
+    digitalWrite(RED_PIN, LOW);
+  }
   return wt;
+}
+
+const char *getReservoirString(float weightPercent)
+{
+  if (weightPercent < 15)
+  {
+    return "RESERVOIR is EMPTY";
+  }
+  else if (weightPercent < 50)
+  {
+    return "Reservoir less than half full";
+  }
+  else if (weightPercent < 75)
+  {
+    return "Reservoir less than 3/4 full";
+  }
+  else
+  {
+    return "Reservoir is full";
+  }
 }

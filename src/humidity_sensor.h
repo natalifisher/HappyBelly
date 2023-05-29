@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "lights.h"
 #include "DHT20.h" // for humidity sensor
-
+#include "display.h"
 void setupHumiditySensor();
-void humidityCheck();
+float humidityCheck();
+const char *getHumidityString(int cur_humidity);

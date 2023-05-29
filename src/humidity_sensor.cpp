@@ -13,7 +13,7 @@ void setupHumiditySensor()
 
     delay(1000);
 }
-void humidityCheck()
+float humidityCheck()
 {
     DHT.read();
     // Get humidity reading
@@ -26,22 +26,43 @@ void humidityCheck()
     {
         // Alert user of high humidity issue
         // Suggest replacing food
-        // These should be changed to be on TTGO menu/ & display
         Serial.println("The humidity in the reservoir is high!");
         Serial.println("You may want to replace the food with a newer batch");
-        blinkLight(YELLOW_PIN, 200); // yellow blinks every 200ms
+        blinkLight(YELLOW_PIN, 100); // yellow blinks every 100ms
     }
     else if (cur_humidity > HUMIDITY_MEDIUM_THRESHOLD)
     {
         // Alert user of medium humidity issue
         // Suggest opening cap for venting, etc
-        // These should be changed to be on TTGO menu/ & display
         Serial.println("The humidity in the reservoir is moderate");
         Serial.println("Opening the reservoir cap might help with ventilation");
+        blinkLight(YELLOW_PIN, 500); // yellow blinks every 300ms
     }
     else
     {
         Serial.println("The humidity in the reservoir is low");
         Serial.println("This helps prolong food shelf life");
+        digitalWrite(YELLOW_PIN, LOW);
+    }
+    return cur_humidity;
+}
+
+const char *getHumidityString(int cur_humidity)
+{
+    if (cur_humidity > HUMIDITY_HIGH_THRESHOLD)
+    {
+        // Alert user of high humidity issue
+        // Suggest replacing food
+        return "HUMIDITY: HIGH! Maybe replace food";
+    }
+    else if (cur_humidity > HUMIDITY_MEDIUM_THRESHOLD)
+    {
+        // Alert user of medium humidity issue
+        // Suggest opening cap for venting, etc
+        return "Humidity: moderate. Improve ventilation";
+    }
+    else
+    {
+        return "Humidity: low. Prolongs food life";
     }
 }
