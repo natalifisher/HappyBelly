@@ -19,6 +19,8 @@
 
 #define START_TIME millis()
 
+boolean dispense = false; 
+
 // used to access TTGO screen responses
 std::map<String, String> responses;
 
@@ -34,6 +36,10 @@ int timer_fallcheck = millis() + FALL_FREQUENCY;
 int timer_dispense = millis() + 75000;
 int val = 1;
 long randnum;
+int dispenseInterval = -1;
+unsigned long startTime = millis();
+unsigned long currentTime;
+unsigned long elapsedTime;
 
 // functions ------------------------------
 void runQuestionnaire()
@@ -90,6 +96,21 @@ void oneTimeQuestionaire()
 }
 void servoRun()
 {
+  if(dispenseInterval == -1){
+    //dispense first time, etc
+    delay(10000);
+    openServo();
+    delay(3000);
+    closeServo();
+  }
+  dispenseInterval = (86400000 /getFeedingFrequency());
+  if (dispenseInterval >= elapsedTime )
+  {
+    dispenseInterval = dispenseInterval + dispenseInterval;
+    openServo();
+    delay(getFeedingAmount());
+    closeServo();
+  }
 }
 
 void demoRun()
@@ -245,6 +266,8 @@ void setup()
 
 void loop()
 {
+  currentTime = millis(); // current time
+  elapsedTime = currentTime - startTime; // elapsed time
   // demoRun();
   // wifiLoop(float humidity, int resWeight, int petWeight, int age, char *breed)
   // wifiDemo();

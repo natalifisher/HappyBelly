@@ -11,7 +11,10 @@ enum BREEDS            // breeds
     SMALL,
     MEDIUM,
     LARGE
-}; 
+};
+const float FLOW_RATE = 0.02;
+unsigned long feedingTime = 0;
+
 BREEDS BREED; // selected breed
 // source of feeding information: https://a-z-animals.com/blog/dog-feeding-rules-by-size-age-and-weight/
 
@@ -212,4 +215,12 @@ void setBreed(int newBreed)
     {
         BREED = LARGE;
     }
+}
+int getFeedingFrequency()
+{
+    return FEEDING_FREQUENCY;
+}
+float getFeedingAmount()
+{
+    return (FEEDING_AMOUNT / FLOW_RATE);
 }
