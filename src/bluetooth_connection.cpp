@@ -1,21 +1,59 @@
 #include <Arduino.h>
 #include "bluetooth_connection.h"
+#include <map>
 
-char responses[10] = {'\0'};
-int counter = 0;
+boolean check_health = false;
+std::map<String, String> petInfo;
+char answers[10] = {'\0'};
+int question_num = 1;
 
+// this will run when user send data via bluetooth
 void MyCallbacks::onWrite(BLECharacteristic *pCharacteristic)
 {
   std::string value = pCharacteristic->getValue();
-  if (value.length() > 0)
+  const char *valueStr = value.c_str();
+
+  switch (question_num)
   {
-    responses[counter] = value[0];
-    Serial.println("*********");
-    Serial.println("Response #" + String(counter + 1));
-    Serial.println(responses[counter]);
-    Serial.println("*********");
-    counter++;
+  case 1:
+    petInfo["Breed?"] = valueStr;
+    answers[question_num - 1] = 'c';
+    break;
+  case 2:
+    petInfo["Weight of Pet?"] = valueStr;
+    answers[question_num - 1] = 'c';
+    break;
+  case 3:
+    petInfo["Age of Pet?"] = valueStr;
+    answers[question_num - 1] = 'c';
+    break;
   }
+  question_num++;
+
+  if (question_num > 3)
+  {
+    if (value[0] == 'O' || value[0] == 'o')
+    {
+      openServo();
+    }
+    else if (value[0] == 'C' || value[0] == 'c')
+    {
+      closeServo();
+    }
+    else if (value[0] == 'W' || value[0] == 'w')
+    {
+      printPercentWeight();
+    }
+    // else if (value[0] == 'H' || value[0] == 'h') // health
+    // {
+    //   checkDispensedFoodEaten();
+    // }
+  }
+}
+
+void getResponses(std::map<String, String> &responses)
+{
+  responses = petInfo;
 }
 
 void setupBluetooth()
@@ -37,5 +75,5 @@ void setupBluetooth()
 
 char getResponse(int num)
 {
-  return responses[num - 1];
+  return answers[num - 1];
 }
