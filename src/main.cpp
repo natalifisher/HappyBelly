@@ -11,24 +11,31 @@
 #include "lights.h"
 #include "feeding.h"
 #include "constants.h"
-// #include "feeding.h"
+#include "feeding.h"
 #include "servo_sensor.h"
 #include "display.h"
 #include "bluetooth_connection.h"
 #include "wificonnect.h"
+
 #define START_TIME millis()
 
-long randnum;
+// used to access TTGO screen responses
+std::map<String, String> responses;
+
+// needed to print Breed ------------------
+const char *breedString = getBreedString();
+
 // for user questionnaire -----------------
 boolean questionnaire_is_complete = false;
-void runQuestionnaire();
 
-// timers
+// timers ---------------------------------
 int timer = millis() + GENERAL_FREQUENCY;
 int timer_fallcheck = millis() + FALL_FREQUENCY;
 int timer_dispense = millis() + 75000;
 int val = 1;
+long randnum;
 
+// functions ------------------------------
 void runQuestionnaire()
 {
   for (int i = 1; i <= 3; i++)
@@ -36,24 +43,53 @@ void runQuestionnaire()
     askQuestion(i);
     while (getResponse(i) == '\0')
     {
-      // Wait until a response is received for the current question
+      // Waits until a response is received for the current question
     }
-
-    showResponse(i, getResponse(i));
-    delay(5000);
+    getResponses(responses);
+    switch (i)
+    {
+    case 1:
+      if (responses.find("Breed?") != responses.end())
+      {
+        Serial.print("Breed entered is: ");
+        Serial.println(responses["Breed?"]);
+        showResponse(i, responses["Breed?"]); // displays to TTGO
+      }
+      break;
+    case 2:
+      if (responses.find("Weight of Pet?") != responses.end())
+      {
+        Serial.print("Weight entered is: ");
+        Serial.println(responses["Weight of Pet?"]);
+        showResponse(i, responses["Weight of Pet?"]);
+      }
+      break;
+    case 3:
+      if (responses.find("Age of Pet?") != responses.end())
+      {
+        Serial.print("Age entered is: ");
+        Serial.println(responses["Age of Pet?"]);
+        showResponse(i, responses["Age of Pet?"]);
+      }
+      break;
+    default:
+      break;
+    }
   }
 }
 
 void oneTimeQuestionaire()
 {
-  // one time questionnaire -------------
   if (questionnaire_is_complete == false)
   {
     runQuestionnaire();
     questionnaire_is_complete = true;
     showComplete();
-    timer_dispense = millis() + 75000;
-  } // ----------------------------------
+    timer_dispense = millis() + 75000; // not sure if needed?
+  }
+}
+void servoRun()
+{
 }
 
 void demoRun()
@@ -76,6 +112,7 @@ void demoRun()
   {
     openServo();
     timer_dispense = millis() + 75000;
+    closeServo();
   }
 }
 
@@ -108,6 +145,68 @@ void wifiAllfinal()
   // wifiLoop(humidity, resPercent, getWeight(), getAge(), getBreedString(), getHumidityString(humidity), getReservoirString(resPercent), getFellOverString());
 }
 
+// sets up feeding values based from data entered via bluetooth  (breed, weight, & age)
+void setupFeeding()
+{
+  // iterates through each question and response stored
+  for (const auto &entry : responses)
+  {
+    const String &key = entry.first;
+    const String &value = entry.second;
+
+    if (key == "Breed?")
+    {
+      switch (value[0])
+      {
+      case 'T':
+      case 't':
+        setBreed(0);
+        break;
+      case 'S':
+      case 's':
+        setBreed(1);
+        break;
+      case 'M':
+      case 'm':
+        setBreed(2);
+        break;
+      case 'L':
+      case 'l':
+        setBreed(3);
+        break;
+      default:
+        break;
+      }
+      // Serial.println(getBreedString());
+    }
+    else if (key == "Weight of Pet?")
+    {
+      int weight = value.toInt();
+      setWeight(weight);
+      // Serial.println(getWeight());
+    }
+    else if (key == "Age of Pet?")
+    {
+      int age = value.toInt();
+      setAge(age);
+      // Serial.println(getAge());
+    }
+  }
+}
+// helps alert the user if their pet is not eating
+void checkDispensedFoodEaten()
+{
+  int intervalCheck = 10;
+  if (getTimeSinceDispenced() >= intervalCheck)
+  {
+    if (getWeightSinceDispensed() == getWeight(2))
+    {
+      Serial.println("Monitor Pet Health\nPet has not eaten");
+      displayText(0xF800, "Monitor Pet Health\nPet has not eaten");
+    }
+  }
+}
+
 void setup()
 {
   // Code to run only once:
@@ -135,12 +234,13 @@ void setup()
   setupDisplay();
   delay(3000); // keep this
   oneTimeQuestionaire();
+  setupFeeding();
 
   // wifi setup
   // note: the questionnaire MUST be done before connecting to Wifi/cloud
   // also must disconnect from the bluetooth connection before the setup starts
   // otherwise the data might not send to the cloud for some reason
-  setupWifi();
+  // setupWifi();
 }
 
 void loop()
@@ -152,8 +252,12 @@ void loop()
   // int resPercent = printPercentWeight();
   // wifiLoop(humidity, resPercent, WEIGHT, AGE, getBreedString());
   delay(5000);
-  wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
-  Serial.println("here");
+  // wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
+  // Serial.println("here");
+
+  Serial.println(getBreedString());
+  Serial.println(getWeight());
+  Serial.println(getAge());
 }
 
 /* ---  TEST FOR SERVO ---

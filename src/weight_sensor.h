@@ -4,10 +4,13 @@
 #include <Arduino.h>
 #include "HX711.h"
 
+
 void setupWeightSensors();
 int getWeight(int scale_num);
 int getPercentWeight(int scale_num);
 void printWeights();
 float printPercentWeight();
 const char *getReservoirString(float weight);
+void setDispensedBaseWeight();
+int getWeightSinceDispensed();
 #endif

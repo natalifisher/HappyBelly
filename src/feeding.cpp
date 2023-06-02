@@ -11,11 +11,15 @@ enum BREEDS            // breeds
     SMALL,
     MEDIUM,
     LARGE
-};
+}; 
 BREEDS BREED; // selected breed
 // source of feeding information: https://a-z-animals.com/blog/dog-feeding-rules-by-size-age-and-weight/
 
 // source of feeding information: https://a-z-animals.com/blog/dog-feeding-rules-by-size-age-and-weight/
+// void setUpFeedingAmt(char *(*getResponseFunc)())
+// {
+// }
+
 void getFeedingFreqAmt()
 {
     if (BREED == TOY)

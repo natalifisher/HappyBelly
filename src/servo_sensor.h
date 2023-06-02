@@ -3,9 +3,12 @@
 
 #include <Arduino.h>
 #include <Servo.h>
+#include "display.h"
+#include "weight_sensor.h"
 
 void setUpServo();
 void openServo();
 void closeServo();
+int getTimeSinceDispenced();
 
 #endif

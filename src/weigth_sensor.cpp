@@ -5,6 +5,8 @@
 #include "constants.h"
 #include "buzzer.h"
 #include "lights.h"
+#include "display.h"
+
 /* ---- WEIGHT SENSOR PIN GUIDE -----------
 DT/DOUT: - 21 || 27 || 33 (digital input pins)
 SCK: ----- 22 || 26 || 32 (digital output pins)
@@ -15,6 +17,8 @@ GND: ----- GND
 HX711 scale_one;
 HX711 scale_two;
 int buzzingWeight = 0;
+int weight_since_dispensed = 0;
+
 void setupWeightSensors()
 {
   // scale ONE setup
@@ -66,6 +70,10 @@ void printWeights()
 float printPercentWeight()
 {
   float wt = getPercentWeight(1);
+
+  String wtString = String(wt);
+  displayText(0x001F,wtString);
+
   Serial.println("\n\nReservoir: " + String(wt) + "\n\n");
   scale_one.power_down();
   scale_two.power_down();
@@ -75,6 +83,7 @@ float printPercentWeight()
 
   if (wt < 50) // less than half empty
   {
+    displayText(0xF800, "Reservoir < 50%");
     activateBuzzer();
     buzzingWeight = 1;
     blinkLight(RED_PIN, 500); // yellow blinks every 500ms
@@ -92,10 +101,12 @@ const char *getReservoirString(float weightPercent)
 {
   if (weightPercent < 15)
   {
+    displayText(0xF800, "Reservoir EMPTY%");
     return "RESERVOIR is EMPTY";
   }
   else if (weightPercent < 50)
   {
+    displayText(0xB5E0, "Reservoir < 50%");
     return "Reservoir less than half full";
   }
   else if (weightPercent < 75)
@@ -104,6 +115,13 @@ const char *getReservoirString(float weightPercent)
   }
   else
   {
+    displayText(0x07E0, "Reservoir FULL");
     return "Reservoir is full";
   }
+}
+void setDispensedBaseWeight() {
+  weight_since_dispensed = getWeight(2);
+}
+int getWeightSinceDispensed() {
+  return weight_since_dispensed;
 }
