@@ -91,8 +91,8 @@ void wifiDemo()
 void wifiAll()
 {
   long humidity = humidityCheck();
-  long resPercent = random(0, 99); // printPercentWeight();
-  int fell = random(0, 2);         // fallCheck();
+  long resPercent = getPercentWeight(1);
+  int fell = fallCheck();
   setAge(random(0, 15));
   setWeight(random(1, 99));
   setBreed(random(0, 3));
@@ -114,21 +114,21 @@ void setup()
   // Setup printing
   Serial.begin(9600);
   // Weight sensor setup
-  // setupWeightSensors();
+  setupWeightSensors();
   // Lights setup
-  setupLights();
+  // setupLights();
 
   // Buzzer setup
-  // setupBuzzer();
+  setupBuzzer();
 
   // Photosensor setup
-  setupPhotosensor();
+  // setupPhotosensor();
   // Humidity sensor setup
-  // setupHumiditySensor();
+  setupHumiditySensor();
   // ask initial user questions here:
   // Servo Setup
-  // setUpServo();
-  // setupGyro();
+  setUpServo();
+  setupGyro();
 
   // questionnaire setup
   // setupBluetooth();
@@ -140,7 +140,7 @@ void setup()
   // note: the questionnaire MUST be done before connecting to Wifi/cloud
   // also must disconnect from the bluetooth connection before the setup starts
   // otherwise the data might not send to the cloud for some reason
-  // setupWifi();
+  setupWifi();
 }
 
 void loop()
@@ -154,8 +154,15 @@ void loop()
   delay(3000);
   // float humidity = humidityCheck();
   // Serial.println(humidity);
-  visiblityLight();
-  // wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
+  float pw = getPercentWeight(1);
+  float tw = getPercentWeight(2);
+  Serial.println(pw);
+  Serial.println(tw);
+  openServo();
+  humidityCheck();
+  // visiblityLight();
+  fallCheck();
+  wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
   Serial.println("here");
 }
 
