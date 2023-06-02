@@ -3,9 +3,10 @@
 void setupLights()
 {
     // Setup LEDs
-    pinMode(RED_PIN, OUTPUT);
-    pinMode(YELLOW_PIN, OUTPUT);
-    pinMode(GREEN_PIN, OUTPUT);
+    // pinMode(RED_PIN, OUTPUT);
+    // pinMode(YELLOW_PIN, OUTPUT);
+    // pinMode(GREEN_PIN, OUTPUT);
+    pinMode(BLUE_PIN, OUTPUT);
 }
 void blinkLight(int pin, int freq)
 {

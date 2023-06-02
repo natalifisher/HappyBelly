@@ -116,31 +116,31 @@ void setup()
   // Weight sensor setup
   // setupWeightSensors();
   // Lights setup
-  // setupLights();
+  setupLights();
 
   // Buzzer setup
   // setupBuzzer();
 
   // Photosensor setup
-  // setupPhotosensor();
+  setupPhotosensor();
   // Humidity sensor setup
-  setupHumiditySensor();
+  // setupHumiditySensor();
   // ask initial user questions here:
   // Servo Setup
   // setUpServo();
   // setupGyro();
 
   // questionnaire setup
-  setupBluetooth();
-  setupDisplay();
-  delay(3000); // keep this
-  oneTimeQuestionaire();
+  // setupBluetooth();
+  // setupDisplay();
+  // delay(3000); // keep this
+  // oneTimeQuestionaire();
 
   // wifi setup
   // note: the questionnaire MUST be done before connecting to Wifi/cloud
   // also must disconnect from the bluetooth connection before the setup starts
   // otherwise the data might not send to the cloud for some reason
-  setupWifi();
+  // setupWifi();
 }
 
 void loop()
@@ -151,10 +151,11 @@ void loop()
   // float humidity = humidityCheck();
   // int resPercent = printPercentWeight();
   // wifiLoop(humidity, resPercent, WEIGHT, AGE, getBreedString());
-  delay(5000);
+  delay(3000);
   // float humidity = humidityCheck();
   // Serial.println(humidity);
-  wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
+  visiblityLight();
+  // wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
   Serial.println("here");
 }
 
