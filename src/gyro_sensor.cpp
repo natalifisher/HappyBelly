@@ -2,6 +2,7 @@
 #include "gyro_sensor.h"
 #include "buzzer.h"
 #include "display.h"
+#include "lights.h"
 float OFFSET_X, OFFSET_Y, OFFSET_Z;
 LSM6DSO mySensor;
 int buzzing = 0;
@@ -41,10 +42,11 @@ int fallCheck()
     // fell over if z or y have acceleration of ~0.981, while other axes have accelration near 0
     if ((abs(x) < 0.2 && abs(y) < 0.2 && abs(z) > 0.8) || (abs(x) < 0.2 && abs(z) < 0.2 && abs(y) > 0.8))
     {
-        displayText(0xF800 ,"TIPPED OVER!");
+        displayText(0xF800, "TIPPED OVER!");
         Serial.println("ALERT"); // print to terminal
         // activate buzzer
         activateBuzzer();
+        blinkLight(RED_PIN, 500);
         buzzing = 1;
     }
     else if (buzzing == 1)

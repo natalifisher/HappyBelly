@@ -130,9 +130,6 @@ void wifiAll()
   long humidity = humidityCheck();
   long resPercent = getPercentWeight(1);
   int fell = fallCheck();
-  setAge(random(0, 15));
-  setWeight(random(1, 99));
-  setBreed(random(0, 3));
   // wifiLoop(humidity, resPercent, getWeight(), getAge(), getBreedString(), getHumidityString(humidity), "Empty reservoir", "food not eaten", "fell over");
   wifiLoop(humidity, resPercent, getWeight(), getAge(), getBreedString(), getHumidityString(humidity), getReservoirString(resPercent), getFellOverString(fell));
 }
@@ -215,13 +212,13 @@ void setup()
   // Weight sensor setup
   setupWeightSensors();
   // Lights setup
-  // setupLights();
+  setupLights();
 
   // Buzzer setup
   setupBuzzer();
 
   // Photosensor setup
-  // setupPhotosensor();
+  setupPhotosensor();
   // Humidity sensor setup
   setupHumiditySensor();
   // ask initial user questions here:
@@ -245,24 +242,16 @@ void setup()
 
 void loop()
 {
-  // demoRun();
-  // wifiLoop(float humidity, int resWeight, int petWeight, int age, char *breed)
-  // wifiDemo();
-  // float humidity = humidityCheck();
-  // int resPercent = printPercentWeight();
-  // wifiLoop(humidity, resPercent, WEIGHT, AGE, getBreedString());
   delay(3000);
-  // float humidity = humidityCheck();
-  // Serial.println(humidity);
   float pw = getPercentWeight(1);
   float tw = getPercentWeight(2);
   Serial.println(pw);
   Serial.println(tw);
   openServo();
   humidityCheck();
-  // visiblityLight();
+  visiblityLight();
   fallCheck();
-  wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
+  // wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
   Serial.println("here");
 }
 

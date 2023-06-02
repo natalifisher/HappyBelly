@@ -36,7 +36,7 @@ float humidityCheck()
         // Suggest opening cap for venting, etc
         Serial.println("The humidity in the reservoir is moderate");
         Serial.println("Opening the reservoir cap might help with ventilation");
-        blinkLight(YELLOW_PIN, 500); // yellow blinks every 300ms
+        blinkLight(YELLOW_PIN, 250); // yellow blinks every 300ms
     }
     else
     {

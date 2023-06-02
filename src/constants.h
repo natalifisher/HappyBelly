@@ -1,7 +1,7 @@
-#define RED_PIN 32
-#define YELLOW_PIN 33
+#define RED_PIN 12
+#define YELLOW_PIN 15
 #define GREEN_PIN 25
-#define BLUE_PIN 26
+#define BLUE_PIN 17
 #define BUZZER_PIN 2 //?
 #define PHOTOSENSOR_PIN 36
 #define PHOTOSENSOR_THRESHOLD 2.9
