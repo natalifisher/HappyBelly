@@ -90,9 +90,9 @@ void wifiDemo()
 
 void wifiAll()
 {
-  long humidity = random(75, 99);
-  long resPercent = random(0, 99);
-  int fell = random(0, 2);
+  long humidity = humidityCheck();
+  long resPercent = random(0, 99); // printPercentWeight();
+  int fell = random(0, 2);         // fallCheck();
   setAge(random(0, 15));
   setWeight(random(1, 99));
   setBreed(random(0, 3));
@@ -124,7 +124,7 @@ void setup()
   // Photosensor setup
   // setupPhotosensor();
   // Humidity sensor setup
-  // setupHumiditySensor();
+  setupHumiditySensor();
   // ask initial user questions here:
   // Servo Setup
   // setUpServo();
@@ -152,6 +152,8 @@ void loop()
   // int resPercent = printPercentWeight();
   // wifiLoop(humidity, resPercent, WEIGHT, AGE, getBreedString());
   delay(5000);
+  // float humidity = humidityCheck();
+  // Serial.println(humidity);
   wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
   Serial.println("here");
 }

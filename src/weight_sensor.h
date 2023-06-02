@@ -6,7 +6,7 @@
 
 void setupWeightSensors();
 int getWeight(int scale_num);
-int getPercentWeight(int scale_num);
+float getPercentWeight(int scale_num);
 void printWeights();
 float printPercentWeight();
 const char *getReservoirString(float weight);

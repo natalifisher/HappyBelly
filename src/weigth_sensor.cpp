@@ -40,15 +40,15 @@ int getWeight(int scale_num)
   return 0;
 }
 
-int getPercentWeight(int scale_num)
+float getPercentWeight(int scale_num)
 {
   if (scale_num == 1)
   {
-    return int(scale_one.get_units() / MAX_WEIGHT);
+    return float(scale_one.get_units() * 100.0 / MAX_WEIGHT);
   }
   else if (scale_num == 2)
   {
-    return int(scale_two.get_units() / MAX_WEIGHT);
+    return float(scale_two.get_units() * 100.0 / MAX_WEIGHT);
   }
   return 0;
 }
@@ -77,7 +77,7 @@ float printPercentWeight()
   {
     activateBuzzer();
     buzzingWeight = 1;
-    blinkLight(RED_PIN, 500); // yellow blinks every 500ms
+    blinkLight(RED_PIN, 500); // red blinks every 500ms
   }
   else if (buzzingWeight == 1)
   {

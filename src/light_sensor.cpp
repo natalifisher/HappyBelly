@@ -10,7 +10,8 @@ void visiblityLight()
 {
     // get photosensor reading
     int photosensor_reading = analogRead(PHOTOSENSOR_PIN);
-    if (photosensor_reading > PHOTOSENSOR_THRESHOLD)
+    photosensor_reading = photosensor_reading * 3.3 / 4095.0;
+    if (photosensor_reading < PHOTOSENSOR_THRESHOLD)
     {
         // turn on blue light for visibility
         digitalWrite(BLUE_PIN, HIGH); // connect several blue LEDs here
