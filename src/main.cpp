@@ -40,6 +40,7 @@ int dispenseInterval = -1;
 unsigned long startTime = millis();
 unsigned long currentTime;
 unsigned long elapsedTime;
+int recentlyOpened = 0;
 
 // functions ------------------------------
 void runQuestionnaire()
@@ -99,19 +100,21 @@ void servoRun()
   if (dispenseInterval == -1)
   {
     // dispense first time, etc
-    delay(10000);
     openServo();
+    recentlyOpened = 1;
     delay(3000);
     closeServo();
+    dispenseInterval = 1;
   }
-  dispenseInterval = (86400000 / getFeedingFrequency());
-  if (dispenseInterval >= elapsedTime)
-  {
-    dispenseInterval = dispenseInterval + dispenseInterval;
-    openServo();
-    delay(getFeedingAmount());
-    closeServo();
-  }
+  // dispenseInterval = (86400000 / getFeedingFrequency());
+  // if (dispenseInterval >= elapsedTime)
+  // {
+  //   dispenseInterval = dispenseInterval + dispenseInterval;
+  //   openServo();
+  //   recentlyOpened = 1;
+  //   delay(getFeedingAmount());
+  //   closeServo();
+  // }
 }
 
 void demoRun()
@@ -215,13 +218,18 @@ void setupFeeding()
 // helps alert the user if their pet is not eating
 void checkDispensedFoodEaten()
 {
-  int intervalCheck = 10;
-  if (getTimeSinceDispenced() >= intervalCheck)
+  int intervalCheck = 20;
+  if (recentlyOpened == 1)
   {
-    if (getWeightSinceDispensed() == getWeight(2))
+    if (getTimeSinceDispenced() >= intervalCheck)
     {
-      Serial.println("Monitor Pet Health\nPet has not eaten");
-      displayText(0xF800, "Monitor Pet Health\nPet has not eaten");
+      if (getWeightSinceDispensed() - getWeight(2) < 5)
+      {
+        Serial.println("Monitor Pet Health\nPet has not eaten");
+        displayText(0xF800, "Pet didn't eat all food");
+        delay(5000);
+      }
+      recentlyOpened = 0;
     }
   }
 }
@@ -265,17 +273,17 @@ void setup()
 void loop()
 {
   delay(3000);
+  currentTime = millis();                // current time
+  elapsedTime = currentTime - startTime; // elapsed time
+  servoRun();
+  checkDispensedFoodEaten();
   float pw = getPercentWeight(1);
   float tw = getPercentWeight(2);
   Serial.println(pw);
   Serial.println(tw);
-  openServo();
   humidityCheck();
   visiblityLight();
   fallCheck();
-  currentTime = millis();                // current time
-  elapsedTime = currentTime - startTime; // elapsed time
-  delay(5000);
   // wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
   Serial.println("here");
 }
