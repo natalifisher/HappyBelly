@@ -1,6 +1,18 @@
+
+/* -------- CS 147--- Group 25 ----HAPPY BELLY --------
+          OSCAR                   NATALI
+
+      |\      _,,,---,,_           /^ ^\
+ZZZzz /,`.-'`'    -.  ;-;;,_      / 0 0 \
+     |,4-  ) )-,_. ,\ (  `'-'     /\ V /\
+    '---''(_/--'  `-'\_)           / - \
+                                   |    \
+                                   || (__V
+------------------------------------------------------*/
+
 // TTGO manual: http://www.lilygo.cn/prod_view.aspx?Id=1126
-// shows which are input only (might be wrong idk): https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
-// Check which pins are input only! available online
+// shows which are input only: https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
+// Check which pins are input only
 
 #include <Arduino.h>
 #include "gyro_sensor.h"
@@ -141,33 +153,16 @@ void demoRun()
   }
 }
 
-void wifiDemo()
-{
-  Serial.println("loop starting");
-  char breed[] = "medium";
-  // wifiLoop(val * 3, val * 5, val * 7, val * 9, breed);
-  val++;
-  delay(5000);
-}
-
+// sends collected data to cloud (AWS)
 void wifiAll()
 {
   long humidity = humidityCheck();
   long resPercent = getPercentWeight(1);
   int fell = fallCheck();
-  // wifiLoop(humidity, resPercent, getWeight(), getAge(), getBreedString(), getHumidityString(humidity), "Empty reservoir", "food not eaten", "fell over");
   wifiLoop(humidity, resPercent, getWeight(), getAge(), getBreedString(), getHumidityString(humidity), getReservoirString(resPercent), getFellOverString(fell));
 }
 
-void wifiAllfinal()
-{
-  int humidity = humidityCheck();
-  long resPercent = printPercentWeight();
-  int fell = fallCheck(); // return buzzing state
-  // wifiLoop(humidity, resPercent, getWeight(), getAge(), getBreedString(), getHumidityString(humidity), getReservoirString(resPercent), getFellOverString());
-}
-
-// sets up feeding values based from data entered via bluetooth  (breed, weight, & age)
+// sets up feeding values based from data entered via bluetooth (breed, weight, & age)
 void setupFeeding()
 {
   // iterates through each question and response stored
@@ -236,7 +231,6 @@ void checkDispensedFoodEaten()
 
 void setup()
 {
-  // Code to run only once:
   // Setup printing
   Serial.begin(9600);
   // Weight sensor setup
@@ -254,8 +248,8 @@ void setup()
   // ask initial user questions here:
   // Servo Setup
   setUpServo();
+  // Gyro and accelerometer setup
   setupGyro();
-
   // questionnaire setup
   setupBluetooth();
   setupDisplay();
@@ -267,7 +261,7 @@ void setup()
   // note: the questionnaire MUST be done before connecting to Wifi/cloud
   // also must disconnect from the bluetooth connection before the setup starts
   // otherwise the data might not send to the cloud for some reason
-  // setupWifi();
+  setupWifi();
 }
 
 void loop()
@@ -284,8 +278,8 @@ void loop()
   humidityCheck();
   visiblityLight();
   fallCheck();
-  // wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
-  Serial.println("here");
+
+  wifiAll(); // sends data to the cloud, updates are then visible on user dashboard (visualization )
 }
 
 /* ---  TEST FOR SERVO ---
@@ -304,14 +298,3 @@ delay(1000);
 test printWeights() ---------------
 printWeights();
 -------------------------------- */
-
-/* -------- CS 147--- Group 25 ------------
-          OSCAR                   NATALI
-
-      |\      _,,,---,,_           /^ ^\
-ZZZzz /,`.-'`'    -.  ;-;;,_      / 0 0 \
-     |,4-  ) )-,_. ,\ (  `'-'     /\ V /\
-    '---''(_/--'  `-'\_)           / - \
-                                   |    \
-                                   || (__V
------------------------------------------*/
