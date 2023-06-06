@@ -9,6 +9,7 @@ WHITE: PIN 27(PREFERED), 0-19(PREFER NOT USE 6-8,11,16)
 ----------------------------------------- */
 // used to calculate how long since food was dispenced
 // for warning owner if pet hasnt been eating food
+
 unsigned long last_dispensed_time = 0;
 
 Servo myservo;
@@ -27,7 +28,7 @@ void setUpServo()
 void openServo()
 {
   Serial.println("opening servo...");
-  displayText(0x0000,"DISPENSING..");
+  displayText(0x0000,"DISPENSING.."); // displays on ttGo screen
 
   // keeps track of how long food has been out for
   last_dispensed_time = millis();
@@ -51,13 +52,14 @@ void closeServo()
     myservo.write(pos);
     delay(10);
   }
-  displayText(0x07E0 ,"-- CLOSED --"); // used to clear screen
+  displayText(0x07E0 ,"-- CLOSED --"); 
 }
 
 void dispense() {
   openServo();
   closeServo();
 }
+// returns seconds food has been on plate for
 int getTimeSinceDispenced() {
   unsigned long elapsedTime = millis() - last_dispensed_time;
   unsigned long elapsedSeconds = elapsedTime / 1000;

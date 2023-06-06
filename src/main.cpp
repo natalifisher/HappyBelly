@@ -1,14 +1,15 @@
 
-/* -------- CS 147--- Group 25 ----HAPPY BELLY --------
-          OSCAR                   NATALI
-
-      |\      _,,,---,,_           /^ ^\
-ZZZzz /,`.-'`'    -.  ;-;;,_      / 0 0 \
-     |,4-  ) )-,_. ,\ (  `'-'     /\ V /\
-    '---''(_/--'  `-'\_)           / - \
-                                   |    \
-                                   || (__V
-------------------------------------------------------*/
+/* --------- CS 147--- Group 25 ---------------|
+|---------------HAPPY BELLY -------------------|
+|          OSCAR                   NATALI      |
+|                                              |
+|      |\      _,,,---,,_           /^ ^\      |
+|ZZZzz /,`.-'`'    -.  ;-;;,_      / 0 0 \     |
+|     |,4-  ) )-,_. ,\ (  `'-'     /\ V /\     |
+|    '---''(_/--'  `-'\_)           / - \      |
+|                                   |    \     |
+|                                   || (__V    |
+|----------------------------------------------*/
 
 // TTGO manual: http://www.lilygo.cn/prod_view.aspx?Id=1126
 // shows which are input only: https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
@@ -210,10 +211,11 @@ void setupFeeding()
     }
   }
 }
+
 // helps alert the user if their pet is not eating
 void checkDispensedFoodEaten()
 {
-  int intervalCheck = 20;
+  int intervalCheck = 20; // in seconds
   if (recentlyOpened == 1)
   {
     if (getTimeSinceDispenced() >= intervalCheck)
@@ -237,10 +239,8 @@ void setup()
   setupWeightSensors();
   // Lights setup
   setupLights();
-
   // Buzzer setup
   setupBuzzer();
-
   // Photosensor setup
   setupPhotosensor();
   // Humidity sensor setup

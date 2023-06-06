@@ -7,6 +7,7 @@ const int MAX_STRING_LENGTH = 50;
 
 TFT_eSPI tft;
 
+// 3 questions for the one-time questionaire on ttGo display
 char questions[NUM_STRINGS][MAX_STRING_LENGTH] = {
     "Breed of Pet?",
     "Weight of Pet?",
@@ -18,7 +19,7 @@ void setupDisplay()
     tft.setRotation(1);
     tft.fillScreen(TFT_BLACK);
 
-    // boot animation
+    // boot-up animation ;; (HAPPY BELLY txt with color changing bckgnd)
     tft.setTextSize(3.5);
     tft.setTextDatum(MC_DATUM);
     tft.setTextColor(TFT_WHITE);
@@ -36,7 +37,6 @@ void setupDisplay()
     {
         tft.fillScreen(colors[i]);
         tft.drawString(text, textX, textY);
-
         // Delay before changing color
         delay(600);
     }
@@ -91,6 +91,7 @@ void showResponse(int r_num, const String &response)
     delay(5000);
 }
 
+// animation plays after questionaire complete ;; (COMPLETE! txt with background color swap black/white)
 void showComplete()
 {
     tft.setTextColor(TFT_BLACK);
@@ -133,6 +134,8 @@ void showComplete()
         delay(250);
     }
 }
+
+// used to display alerts such as resourvoir empty, humidity alert, tipped over, ...
 void displayText(int color, const String &text)
 {
     tft.fillScreen(color);

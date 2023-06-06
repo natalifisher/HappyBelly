@@ -19,13 +19,14 @@ HX711 scale_two;
 int buzzingWeight = 0;
 int weight_since_dispensed = 0;
 
+// initializes weight #1 and weight #2
 void setupWeightSensors()
 {
   // scale ONE setup
   scale_one.begin(33, 26); // format: (DT/DOUT, SCK)
   scale_one.set_scale(427.00);
   scale_one.tare();
-  // // scale TWO setup
+  // scale TWO setup
   scale_two.begin(27, 32); // format: (DT/DOUT, SCK)
   scale_two.set_scale(459.00);
   scale_two.tare();
