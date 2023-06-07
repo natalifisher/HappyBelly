@@ -119,15 +119,15 @@ void servoRun()
     closeServo();
     dispenseInterval = 1;
   }
-  // dispenseInterval = (86400000 / getFeedingFrequency());
-  // if (dispenseInterval >= elapsedTime)
-  // {
-  //   dispenseInterval = dispenseInterval + dispenseInterval;
-  //   openServo();
-  //   recentlyOpened = 1;
-  //   delay(getFeedingAmount());
-  //   closeServo();
-  // }
+  dispenseInterval = (86400000 / getFeedingFrequency());
+  if (dispenseInterval >= elapsedTime)
+  {
+    dispenseInterval = dispenseInterval + dispenseInterval;
+    openServo();
+    recentlyOpened = 1;
+    delay(getFeedingAmount());
+    closeServo();
+  }
 }
 
 void demoRun()
@@ -164,6 +164,7 @@ void wifiAll()
 }
 
 // sets up feeding values based from data entered via bluetooth (breed, weight, & age)
+// used to determine feeding amount and frequency, calculations stored in a separate file
 void setupFeeding()
 {
   // iterates through each question and response stored

@@ -1,10 +1,11 @@
+// This allows us to connect to AWS services
+// We found the tutorial at https://how2electronics.com/connecting-esp32-to-amazon-aws-iot-core-using-mqtt/
+// to be useful; it involved a lot of steps to make everything work
 #include <pgmspace.h>
 
 #define SECRET
 #define THINGNAME "ESP32_CS147"
 
-// const char WIFI_SSID[] = "LeWifi";
-// const char WIFI_PASSWORD[] = "Hamster1!";
 const char WIFI_SSID[] = "UCInet Mobile Access";
 const char WIFI_PASSWORD[] = "";
 const char AWS_IOT_ENDPOINT[] = "a3q4wtgayp0zr4-ats.iot.us-east-2.amazonaws.com";
@@ -59,7 +60,7 @@ dBCef7KS57iwaYzi/Pq98j97bkCGrumdTmpgriGiurKpuI80hMVJK4AhhInz
  
 )KEY";
 
-// Device Private Key                                               //change this
+// Device Private Key
 static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
 -----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEA3kVqhWpsjN8W92vqjruP+NNoN6cGaj34odf92UYxWgxfwXWX
