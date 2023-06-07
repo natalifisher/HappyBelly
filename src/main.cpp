@@ -105,7 +105,7 @@ void oneTimeQuestionaire()
     runQuestionnaire();
     questionnaire_is_complete = true;
     showComplete();
-    timer_dispense = millis() + 75000; // not sure if needed?
+    timer_dispense = millis() + 75000;
   }
 }
 void servoRun()
