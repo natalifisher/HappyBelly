@@ -130,7 +130,7 @@ void servoRun()
   }
 }
 
-void demoRun()
+void demoRun() // old
 {
   if ((millis() > timer))
   {

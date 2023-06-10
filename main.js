@@ -153,7 +153,7 @@ let drawChart = function (data) {
   const date = new Date(Number(timestamps));
 
   if (prevDate != -1 && prevDate.getTime() == date.getTime()) {
-    return; //don't plot, same data
+    return; //don't plot same data more than once
   }
   prevDate = date;
   upArr.push(date.toLocaleString("en-US"));
@@ -187,11 +187,6 @@ let drawChart = function (data) {
     .getElementById("reservoirWarning")
     .innerHTML.replace(".", reservoirWarning);
 
-  // document.getElementById("foodEatenWarning").innerHTML = ".";
-  // document.getElementById("foodEatenWarning").innerHTML = document
-  //   .getElementById("foodEatenWarning")
-  //   .innerHTML.replace(".", foodEatenWarning);
-
   document.getElementById("fallOverWarning").innerHTML = ".";
   document.getElementById("fallOverWarning").innerHTML = document
     .getElementById("fallOverWarning")
@@ -201,7 +196,7 @@ let drawChart = function (data) {
   myReservoirChart.series[0].setData(weightArr, true);
 };
 
-let intervalTime = 5 * 1000; // 3 second interval polling, change as you like
+let intervalTime = 5 * 1000; // 5 second interval polling, change as you like
 setInterval(() => {
   getData();
 }, intervalTime);
