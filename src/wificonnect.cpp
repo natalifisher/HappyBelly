@@ -1,7 +1,8 @@
 
-// this code was initially based on the following tutorial:
+// this code was initially based on the following tutorial
 // https://how2electronics.com/connecting-esp32-to-amazon-aws-iot-core-using-mqtt/
-
+// which was useful; it involved a lot of steps to make everything work
+// and further modificaitons were necessary to make it work for the project
 #include "wificonnect.h"
 
 WiFiClientSecure net = WiFiClientSecure();
@@ -61,10 +62,7 @@ void publishMessage(float humidity, int resWeight, int petWeight, int age, const
   doc["breed"] = breed;
   doc["humidityWarning"] = humidityWarning;
   doc["reservoirWarning"] = reservoirWarning;
-  // doc["foodEatenWarning"] = foodEatenWarning; //not enough memory?
   doc["fallOverWarning"] = fallOverWarning;
-
-  // doc["temperature"] = temperature;
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
 
@@ -89,24 +87,6 @@ void setupWifi()
 
 void wifiLoop(float humidity, int resWeight, int petWeight, int age, const char *breed, const char *humidityWarning, const char *reservoirWarning, const char *fallOverWarning)
 {
-  //  humidity, resWeight, petWeight, age, breed
-  // Serial.println("hi");
-  // DHT.read();
-  // humidity = DHT.getHumidity();
-  // temperature = DHT.getTemperature();
-
-  // if (isnan(humidity) || isnan(temperature)) // Check if any reads failed and exit early (to try again).
-  // {
-  //   Serial.println(F("Failed to read from DHT sensor!"));
-  //   return;
-  // }
-
-  // Serial.print(F("Humidity: "));
-  // Serial.print(humidity);
-  // Serial.print(F("%  Temperature: "));
-  // Serial.print(temperature);
-  // Serial.println(F("°C "));
-
   publishMessage(humidity, resWeight, petWeight, age, breed, humidityWarning, reservoirWarning, fallOverWarning);
   client.loop();
   // delay(1000);

@@ -1,6 +1,7 @@
 // This allows us to connect to AWS services
 // We found the tutorial at https://how2electronics.com/connecting-esp32-to-amazon-aws-iot-core-using-mqtt/
 // to be useful; it involved a lot of steps to make everything work
+// and further modificaitons were necessary to make it work for the project
 #include <pgmspace.h>
 
 #define SECRET
